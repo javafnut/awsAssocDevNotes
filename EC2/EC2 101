@@ -1,0 +1,301 @@
+EC2 101
+
+Def: What is EC2 ?
+Amazon Eclastic Compute Cloud is a web service that provides resizable compute capacity in the cloud.  Amazon EC2 reduces the time required to botain and boot new server
+instances to minutues, allow you to quicly scale capacity, both up and down as your computing requirements change.
+
+
+ ==============================================================================================
+Pricing models
+
+1. On Demand
+	- Perfect for users that want the low cost and flexibilty of Amazon
+	  ECS without and up from payment or long-term commitments
+	- Applications with short term, spikey or unpredicatble work loads
+	- Applications being developed or tested
+2. Reserved Instances
+	- Applicastion with steady state or pedictable usage
+	- Applications that require a reserved capacity (ie webserver)
+	- users can make up front payments to reduce their total computing costs even further
+	- Standard Costs Reserved instances (Rls) (up to 75% off on-demand)
+	- Convertible RLS (up to 54% off on-demand) features the capacity to change
+	  the attributes of RI as long as the exnage results in the creation of RI's of equal or greater value
+   Reserved Intances Scheduled
+	- Applications with steady state or pedicable usage
+	- Applications that require reserved capacity
+	  Users cna make up-front payments to reduce their total computing costs even further
+   - Convertible RLS (up to 54% off on-demand) features the capacity to change
+	  the attributes of RI as long as the exnage results in the creation of RI's of equal or greater value
+	- Scheduled RI's are available to launch within the time window you reserve.  This option allows your to 
+	  match your acpacity reservation to predicable schedules
+3. Spot Insance
+   - Applications that have flexible start and end times
+   - Applicaitons that areonly feasable at very low compute prices (IE genetics, pharms)
+   - Users that urgent need immediate RI's to take care of occasional
+ 4. Dedicated hosts
+ 	- Useful for regualatory requirements that may not support multi-tenant virtualization
+ 	- Create for licensing which does not support muli-tenancy or cloud deployment
+   - can be purchased on-demand(hourly)
+   - Can be purchase as a Reservation for up to 70% of online demand pricing
+ ==============================================================================================  
+ 
+ FYI Review EC2 Instance type PDF
+ 
+ - Fight Dr McGiftpx ancronym for instance types
+   F - FPGA
+ 	D - Densiity
+	R - Ram
+	M - Main multi purpase
+	C - Compute
+	G - Graphics
+	I - IOPS High speed storage
+	F - FPGA - Field programmable Gate Array
+	T - Cheap general purpose
+	P - Grapics (Pix)
+	X - Exteme memorey
+	
+  ==============================================================================================  
+  
+  Def What is EBS ?
+  Amazon EBS allows your to create storage volumes and attach them to
+  Amazon EC2 instances.  Once attached, you can create a file system on top of
+  these volumes, run a database, or use them in any other way you use a block device.
+  Amazon EBS volumens are places in a specific Availablity Zone*, 
+  where they are automatically replicated to protect you from failure of a single component
+  
+  EBS Volume Types
+  1. General Purpose SSD (GP2)
+  	- Ratio of 3 IPOS per GB with upto 10,000 IPS and abilty to burst up to 30,000 IOPS
+  	      for extend periods of time for volums up to 3334 GiB and above
+   - General purpose both price and performance
+  2. Provisioned IOPS SSD (IO1)
+   - Designed for I/O intensive (DB's ect)
+   - Use if you need more than 10000 IOPS
+   - Can provision up to 20,000 IOPS per Volume
+  3. Throughput optimized HDD (ST1)
+   - Big data/ data wherehousing
+   - Log processing
+   - cannot be boot volume
+  4. Cold HDD (SC1)
+  	- Low cost storage, infrequntly used data
+  	- File server
+  	- cannot be a boot volume
+  5  Magnetic Standard
+    - Lowest coset of the types that is bootable
+    - Good for workloads where data is accessed infrequently
+    
+  		
+  Exam Tips
+   - know pricing models - (on demand,reserve,spot,dedicated servers)
+   - If spot instance is terminated by Amazon EC2 (ie price change),  you do not pay for partial hours
+     if you termate an instance you will be charged for partial hours
+   - Be familiar Fight Dr McGiftpx ancronym for instance types
+   - Know different EBS types
+   	- SSD 
+   		- General purpose SSD (GP2) upto 10000 IOPS
+   		- Provisioned SSD (IO1) > 10000 IOPS
+   	- Magnetic
+   	 - Throughput Optimized HDD (ST1) frequently accessed workload
+   	 - HDD Cold (SC1) less frequenty accessed data
+   	 - HDD Magentic - Stanard cheap can be a boot volume
+    - You CANNOT mount 1 EBS volume to multiple EC2 instances, instead use EFS
+    - FYI Review EC2 Instance type PDF
+ 
+ 	- EC2 Instance Types: Fight Dr McGiftpx ancronym for instance types
+   	F - FPGA
+ 		D - Densiity
+		R - Ram
+		M - Main multi purpase
+		C - Compute
+		G - Graphics
+		I - IOPS High speed storage
+		F - FPGA - Field programmable Gate Array
+		T - Cheap general purpose
+		P - Grapics (Pix)
+		X - Exteme memorey
+		
+		
+=======================================================================================================
+
+Security Groups Lab:
+	Security Group is a Virtual Firewall
+	- All inbound traffic is block by default
+	- All outbound traffic is allowed
+	- changes to a security group apply immediately
+	- you can have multiple EC2 instances within a security group
+	- you can have multiple security groupls assigned to one EC2 instance
+	- Security Groups are STATEFUL 
+		- if your create an inbound rule allowing traffic in,
+		  is automatically allowed back out again
+   - you CANNOT block specific IP address from Security Grups, only from
+     Network Access Control Lists
+   - you CAN specify allow rules, CANNOT define a deny rule
+  		
+=======================================================================================================	
+Upgrading EBS Volume Types - Lab  
+	- You CANNOT mount drives accross availability zones
+	- Root device has to be in same availability zone
+	- you cannot modify every type except standard magnetic
+	- you can create another volume from a snapshot, then create a new volume new availability zone
+	- To move then create a snapshot, then move to new zone
+	
+	- Volumes exist on EBS:
+		- Virtual HDD
+	- Snapshots exist on S3
+	- Snapshots are incremental in time of Volumes
+		- Only blocks saved that are changed
+	- You should stop instances before taking a snapshot of root volume, not required
+	- You can create AMI's (Amazon Machine Image) from both Volumes and Shapshots
+	- You can change EBS volume on the fly, both size and storage (best practice is to stop)
+	- Volumes will ALWAYS be in the same availability zone as the EC3 instance
+	- To move a volume between AZ then take a snap or AMI and then copy to another AZ
+	- Snapshots are encrypted volumes are encrypted automatically
+	- Volumes restored from encrypted snapshots are encrypted automatically
+	- You can share snapshots only if unencrypted
+		- These snapshots can be shared with other AWS accounts or made public
+
+
+======================================================================================================  		
+  EFS Elastic File System - Lab (Not in Exam) - COOL STUFF THE FUTURE, GET ON TOP OF THIS FOR JOB
+  Def: Amazon EFS is a file storage service for Amazon Elastic Compute Cloud EC2 instances
+       Amazon EFS is east to use and provides a simple interface that allows you to create
+       and configure file systems quickly and easily.  With Amazon EFS, storage capacity is
+       elastic, growing and shrinking automatically as needed.
+  - allows E
+  - EFS Features
+  	- Supports the NFS v4
+  	- You only pay for the storage you use (no pre-provising required)
+  	- can scale up to petabyes
+  	- can support thousands of concurrent NFS Connections
+  	- Data is stored accross multiple AZ's with a regions
+  	- Read and Write Consistency
+  	
+  ======================================================================================================  	
+  The AWS CLI - Using Credentials Lab
+   - Create User with programatic access and EC2 instance
+   - use terminal to login as normal wth instance IP
+   - use sudo su
+   - aws s3 ls (unable to locate credentials)
+   - aws configure use users key and secret key
+   - enter region name
+   - use default output (none)
+   - aws s3 ls - will display all of your s3 buckets
+   - cd ~/.aws
+   - you will see two files (credentials)
+   - CAUTION leaving this key with port 22 open will allow any others to login if they have your credential,private key
+   - DON'T upload to GitHub
+   - More secure way to do this is to use roles
+   - Terminate:
+   	- aws ec2 desribe-instances (locate instance, then copy InstanceId
+   	- aws ec2 terminate-instances --instance-id (InstanceId#)
+   	- Should terminate and close termainl login
+   - Go back to console and delete the created user with progamatic access
+   
+  ======================================================================================================
+   The AWS CLI - Using Roles Lab
+   
+   
+   
+  
+	
+	
+	
+	
+	
+	
+=======================================================================================================		
+EXAM TIPS FOR ALL SECTIONS
+=======================================================================================================
+
+  EC2 101 Exam Tips
+   - know pricing models - (on demand,reserve,spot,dedicated servers)
+   - If spot instance is terminated by Amazon EC2 (ie price change),  you do not pay for partial hours
+     if you termate an instance you will be charged for partial hours
+   - Be familiar Fight Dr McGiftpx ancronym for instance types
+   - Know different EBS types
+   	- SSD 
+   		- General purpose SSD (GP2) upto 10000 IOPS
+   		- Provisioned SSD (IO1) > 10000 IOPS
+   	- Magnetic
+   	 - Throughput Optimized HDD (ST1) frequently accessed workload
+   	 - HDD Cold (SC1) less frequenty accessed data
+   	 - HDD Magentic - Stanard cheap can be a boot volume
+    - You CANNOT mount 1 EBS volume to multiple EC2 instances, instead use EFS
+    -  FYI Review EC2 Instance type PDF
+ 
+ 	- EC2 Instance Types: Fight Dr McGiftpx ancronym for instance types
+   	F - FPGA
+ 		D - Densiity
+		R - Ram
+		M - Main multi purpase
+		C - Compute
+		G - Graphics
+		I - IOPS High speed storage
+		F - FPGA - Field programmable Gate Array
+		T - Cheap general purpose
+		P - Grapics (Pix)
+		X - Exteme memorey
+
+
+=======================================================================================================
+
+LAB 1 Notes -create a EC2 instance
+    
+For Exam:
+	- Termination Protection is turned off by default
+	- On an EBS-Backed instance, the default action is for the root EBS volume
+	  to be deleted when the instance is terminated
+	- EBS Root Volumees of your DEFAULT AMI's cannot be encypted. HOWEVEr, you can
+	  use third party tool (ie bit locker, ect) to encrypt the root volume, or this can be
+	  done when creating AMI's in the AWS console or using API
+	- Additional volumes can be encrypted
+	
+=======================================================================================================	
+Security Groups Lab:
+	Security Group is a Virtual Firewall
+	- All inbound traffic is block by default
+	- All outbound traffic is allowed
+	- changes to a security group apply immediatly
+	- you can have multiple EC2 instances within a security group
+	- you can have multiple security groupls assigned to one EC2 instance
+	- Securtiy Groups are STATEFUL 
+		- if your create an inbound rule allowing traffic in,
+		  is automatically allowed back out again
+   - you CANNOT block specific IP address from Security Grups, only from
+     Network Access Control Lists
+   - you CAN specify allow rules, CANNOT define a deny rule
+   
+=======================================================================================================	
+Upgrading EBS Volume Types - Lab   
+	
+	- Volumes exist on EBS:
+		- Virtual HDD
+	- Snapshots exist on S3
+	- Snapshots are incremental in time of Volumes
+		- Only blocks saved that are changed
+	- You should stop instances before taking a snapshot of root volume, not required
+	- You can create AMI's (Amazon Machine Image) from both Volumes and Shapshots
+	- You can change EBS volume on the fly, both size and storage (best practice is to stop)
+	- Volumes will ALWAYS be in the same availability zone as the EC3 instance
+	- To move a volume between AZ then take a snap or AMI and then copy to another AZ
+	- Snapshots are encrypted volumes are encrypted automatically
+	- Volumes restored from encrypted snapshots are encrypted automatically
+	- You can share snapshots only if unencrypted
+		- These snapshots can be shared with other AWS accounts or made public
+=======================================================================================================
+ 
+
+=======================================================================================================   
+	  
+      
+    
+  
+   	
+   	
+  
+  
+
+ 
+   
+   
+    

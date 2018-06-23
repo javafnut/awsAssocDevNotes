@@ -1,0 +1,75 @@
+﻿STS - Security Token Service
+Desc:
+Grants user limited and temporary access to AWS resources
+3 types:
+1. Federation (typically active directory)
+    - Uses Securtiy Assertion Markup Language
+    - Grants Temporaty access based off the users Active Directory
+    - Does not need to be defined in IAM
+    - Single sign on allows users to log in to AWS console without assigning IAM Credentials
+
+2. Federation with Mobile apps
+    - User FB,Amazon,Gootle or othe OpenID providers to log in
+3. Cross Account Access
+    - Lets users form one AWS account access resources in another
+
+Key Terms:
+- Federation: Combining or joining a list of users in one domain (IE IAM) with another domain(Active Directory, FB)
+- Identity Broker: A service that allows you to take an identity from point A and join (or federate) it to point B
+    - Needs to be created, not out of the box*
+- Identity Store - Serices like Active Directory, Google, Ect
+- Identities - a user of a service like Facebook, ect…
+- ADFS – Active Directory Federation Services – SSO from Microsoft, plugin for Webserver
+- SAML - Security Assertion Markup Language
+
+
+Scenario:
+You are hosting a company website on some EC2 web servers in your VPC.
+Users of the website must log in to the site which then
+authenticates agains the companies active directory servers which
+are based on site at the companies headquarters.  Your VPC is
+connected to your company HQ via a secure IPSEC VPN. ONce
+logged in the user can only have access to their own S3 bucket.
+How do you set this up?
+
+Answer
+1. Employee enters their username and password
+2. The application calls an Idenity Broker. The broker captures the username and password
+3  The identity broker usees the organizations LDAP directory to validate the employees identity
+4. The identity broker calls the new GetFederationToken function using IAM credentials.
+   The call must include the IAM policy and a duration (1 to 36 hours),
+   along with a policy that specifies the permissions to be granted to the temp security credentials
+5. The Security Token Service confirms that the policy of the IAM user making the call to GetFederationToken
+   gives permission to create new tokes and then returns 
+   four values to the application:
+    1. access key  
+    2. a secret accress key,
+    3. a token
+    4. duration of tokens lifetime
+6. The identity broker retuns the temporary security credentials to the reporting application
+7. The data storage application uses the temporary security credentials (including the token to make requests to S3
+8  Amazon S3 uses IAM to verify that the credentials allow the requested operation on the given S3 bucket and key
+9. IAM provides S3 with the go-ahead to perform the requested operation.
+
+In the Exam: ( user credentials)
+1. Develop and Identity Broker to communicate with LDAP and AWS STS
+2. Identity Broker always authenticates with LDAP first, THEN with AWS STS
+3. Application then gets temporary access to AWS resources
+
+or (role based ie admin)
+1. Develop and Identity Broker to communicate with LDAP and AWS STS
+2. Identity Broker always autehnticates with LDAP first, gets and IAM Role associate wth a user
+3. Application then authenticates with STS and assumes the IAM Role
+4. Application uses that IAM role to interact with S3
+
+Scenrio notes:
+- Always authenticate agains Active Directory First
+
+
+Term
+
+
+
+
+
+

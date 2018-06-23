@@ -1,0 +1,40 @@
+IAM
+- Centralized control of your AWS account
+- Shared Access to your AWS Account
+- Granular Permissions
+- Identity Federation(Active Directory, FB, Linked, ect)
+- Multifactor Authentication
+- Provide temporary accesses for user/devices and Services
+- Allow setup password policy
+- Integrates with many different AWS services
+- Supports PCI DSS Compliance
+
+Critical Terms
+- Users
+- Groups of users with same permissions
+- Roles:  cration of roles then assign to resources
+- Policy: Document that defines on or more permissions (assigned to user, groups, roles)
+
+IAM Lab Notes
+
+- located under Security, Identity & Compliance
+* Region is always global for this
+- root account is the email address, gives me root account 
+- Activate MFA (using Google Authenticator)
+    - Use QR Code
+
+- Group Administrator Access is same as root
+- User TJ: 
+login:tj
+PW: )lQhdX9o04#x
+AccessKey ID: AKIAJOSAU4VTU6WDKMWQ
+Secret Access Key: 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
+
+AccessKey & SecretAccess Key only through programitic interface
+***************************************************************************************
+
+
+
+
+
+

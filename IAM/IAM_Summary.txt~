@@ -1,0 +1,30 @@
+IAM - Summary
+
+IAM Consists of the following:
+ - Users
+ - Groups (A way to group our users and apply polices to them collectively)
+ - Roles
+ - Policy Documents
+ 	
+ 	Ex: // Admin Access
+ 	    {"Version":"2018-07-01",
+ 	     "Statement":
+ 	     [
+ 	      {"Effect":"Allow",
+ 	       "Action":"*",
+ 	       "Resource":"*"}
+ 	     ]
+ 	    }
+ 	
+ - IAM is universal, It does not apply to regions at this time.
+ - The "root" is simply the account. Is has complete Admin acces
+ - New Users have NO permissions when first created.
+ - New Users are assigned Access Key ID & Secret Access Keys when first created
+ - These are not the same as a password, and you cannot use the Access Key ID &
+   Secret Access Key to Log into the console.  You can use this acss AWS via the
+   APIS's and Command Line however.
+ - you can generate the credentials only once and download as a csv
+ - Always setup Multifactor Authentication on your root account
+ - You can create and customize your own password rotation policies
+ 
+ 

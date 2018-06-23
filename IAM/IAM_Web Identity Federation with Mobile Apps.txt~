@@ -1,0 +1,19 @@
+Web Identity Federation with Mobile Apps
+- Used for access for FB, Google, ect for authentication
+- requires considerable amount of coding
+
+- under IAM you can try it out in the Web Identity Federation playground
+	1. Step 1 Select service you wish to log into (Google, FB)
+		1A. This will download an access token, with an expire limit in seconds
+	2. Step 2 - Obtain Temporary Security Credentiaqls 
+		2A - Creates Policy statement
+		2B - RoleAM - Amazon Resource Name **
+		2C - RoleSessionName (ie web-identity-federation)
+		2D - WebIdentityToken
+		2E - AssumeRoleWith Webidentity (click)
+		   2E1 - Creates a request and response (can req in browser to test)
+	3.Access AWS Resources
+		3A - Shows Access Police, Secret Access Key, Access Key ID, Session Token
+		3B - Can do the following S3 action ListBucket,GetObject
+	
+		
