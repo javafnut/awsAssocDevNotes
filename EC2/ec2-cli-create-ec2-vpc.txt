@@ -2,6 +2,7 @@
    aws ec2 run-instances --image-id ami-abc12345 --count 1 --instance-type t2.micro
      --key-name MyKeyPair --security-group-ids sg-1a2b3c4d --subnet-id subnet-6e7f829e
      
-       aws ec2 run-instances --image-id ami-25110f45 --count 1 --instance-type t2.micro --key-name KeyPairCurrent --security-group-ids sg-96a22aee --subnet-id subnet-733eeb28
+   aws ec2 run-instances --image-id ami-25110f45 --count 1 --instance-type t2.micro --key-name KeyPairCurrent --security-group-ids sg-96a22aee --subnet-id subnet-733eeb28
        
-        aws ec2 run-instances --image-id ami-25110f45 --count 1 --instance-type t2.micro --key-name KeyPairCurrent --security-group-ids sg-96a22aee --subnet-id subnet-733eeb28
+    aws ec2 run-instances --image-id ami-25110f45 --count 1 --instance-type t2.micro --key-name KeyPairCurrent.pem --security-group-ids sg-96a22aee --subnet-id subnet-733eeb28
+        

@@ -85,7 +85,7 @@ Pricing models
     - Lowest coset of the types that is bootable
     - Good for workloads where data is accessed infrequently
     
-  		
+ 		
   Exam Tips
    - know pricing models - (on demand,reserve,spot,dedicated servers)
    - If spot instance is terminated by Amazon EC2 (ie price change),  you do not pay for partial hours
@@ -230,8 +230,36 @@ Command:
   	- start-instances
   		- starts stopped instances 
   	- terminate-instances
-  		
-=======================================================================================================		
+
+=======================================================================================================	
+   S3 CLI Regions Lab
+ 	- create some buckets from different regions in S3
+	 - uploads some files to each bucket
+ 	- Create a EC2 role with S3FullAccess permissions
+ 	- startup ec2 instance without the roles
+ 	- log into ec2
+ 	- double check s3 buckets (aws s3 ls)
+ 		- should be no access
+ 	
+ 	Examples
+ 	- Copy from within region
+ 	  aws s3 cp --recursive s3://acloudguru-tj-apsw2 ~/.
+ 	  
+   - Copy from another region
+ 	  aws s3 cp --recursive s3://acloudguru-tj-apsw2 ~/.  --region eu-west-2
+ 	 
+ 	- GOOD Idea - Alwasy use the region flag --region 
+ 	  		
+=======================================================================================================	
+  Bash Scripting Lab
+  - can add bash commands, but did not work at the ec2 instance config
+  - BEST to use a uploaded bash script, worked fine
+  - TODO do this and copy files from another regions, best to use a simple index file:
+  
+
+
+=======================================================================================================
+	
 EXAM TIPS FOR ALL SECTIONS
 =======================================================================================================
 
@@ -330,9 +358,14 @@ Upgrading EBS Volume Types - Lab
   	- start-instances
   		- starts stopped instances 
   	- terminate-instances
-  		
-
+ 		
+   Note: For s3 regions alwayas best to use --regions flag
+   ie: aws s3 cp --recursive s3://acloudguru-tj-apsw2 ~/.  --region eu-west-2
+      
 =======================================================================================================   
+
+
+
 
 
 =======================================================================================================
