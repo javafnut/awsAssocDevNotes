@@ -4,8 +4,8 @@ Def: What is EC2 ?
 Amazon Eclastic Compute Cloud is a web service that provides resizable compute capacity in the cloud.  Amazon EC2 reduces the time required to botain and boot new server
 instances to minutues, allow you to quicly scale capacity, both up and down as your computing requirements change.
 
+==============================================================================================
 
- ==============================================================================================
 Pricing models
 
 1. On Demand
@@ -37,7 +37,8 @@ Pricing models
  	- Create for licensing which does not support muli-tenancy or cloud deployment
    - can be purchased on-demand(hourly)
    - Can be purchase as a Reservation for up to 70% of online demand pricing
- ==============================================================================================  
+
+==============================================================================================  
  
  FYI Review EC2 Instance type PDF
  
@@ -54,7 +55,7 @@ Pricing models
 	P - Grapics (Pix)
 	X - Exteme memorey
 	
-  ==============================================================================================  
+==============================================================================================  
   
   Def What is EBS ?
   Amazon EBS allows your to create storage volumes and attach them to
@@ -193,16 +194,43 @@ Upgrading EBS Volume Types - Lab
    
   ======================================================================================================
    The AWS CLI - Using Roles Lab
-   
-   
-   
+   - Create Role in console, use S3FullAccess
+   - create ec2 instance and assign role
+   - ssh login and sudo su
+   - note you can "run aws s3" ls at this point (already auth'd)
+   - run aws configure
+   	- click through security key/secret key
+   	- enter region (ie us-west-1)
+   - NOTE: if you check ~/.aws it no longer has credentials, but does have config
+  ======================================================================================================
+  CLI Commands for the Developer Exam Lab
   
-	
-	
-	
-	
-	
-	
+  Setup:
+	- same setup as above, except give the Role AdminAccess
+  	- use run-instances to create a new instance
+
+** This example launches a single instance of type t2.micro into the specified subnet.
+The key pair named MyKeyPair and the security group sg-1a2b3c4d must exist.
+
+Command:
+   aws ec2 run-instances --image-id ami-abc12345 --count 1 --instance-type t2.micro
+     --key-name MyKeyPair --security-group-ids sg-1a2b3c4d --subnet-id subnet-6e7f829e
+     
+  For Exam: 
+  Ref: https://docs.aws.amazon.com/cli/latest/reference/ec2/index.html
+ 
+  - know something about how the commands are named
+  - Good ones to know
+  	- describe-instances
+  	- describe-images
+  	   - used to describe images available to us
+  	- run-instances
+  		- used to create instances
+  		- See below
+  	- start-instances
+  		- starts stopped instances 
+  	- terminate-instances
+  		
 =======================================================================================================		
 EXAM TIPS FOR ALL SECTIONS
 =======================================================================================================
@@ -251,6 +279,7 @@ For Exam:
 	- Additional volumes can be encrypted
 	
 =======================================================================================================	
+
 Security Groups Lab:
 	Security Group is a Virtual Firewall
 	- All inbound traffic is block by default
@@ -266,6 +295,7 @@ Security Groups Lab:
    - you CAN specify allow rules, CANNOT define a deny rule
    
 =======================================================================================================	
+
 Upgrading EBS Volume Types - Lab   
 	
 	- Volumes exist on EBS:
@@ -282,10 +312,30 @@ Upgrading EBS Volume Types - Lab
 	- Volumes restored from encrypted snapshots are encrypted automatically
 	- You can share snapshots only if unencrypted
 		- These snapshots can be shared with other AWS accounts or made public
+
 =======================================================================================================
+
+ CLI commands  
+  For Exam: 
+  Ref: https://docs.aws.amazon.com/cli/latest/reference/ec2/index.html
  
+  - know something about how the commands are named
+  - Good ones to know
+  	- describe-instances
+  	- describe-images
+  	   - used to describe images available to us
+  	- run-instances
+  		- used to create instances
+  		- See below
+  	- start-instances
+  		- starts stopped instances 
+  	- terminate-instances
+  		
 
 =======================================================================================================   
+
+
+=======================================================================================================
 	  
       
     
