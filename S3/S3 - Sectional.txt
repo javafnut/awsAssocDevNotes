@@ -1,0 +1,176 @@
+
+Simple Def:  S3 provides developers and IT teams wiht secure, durable, highly-scalable object storage.
+Amazon S3 is easty to use, with a simple web services interface to store and retrieve any amount of data from anywhere
+on the web.
+
+** Web Services Interface
+** Object Based Store
+
+Characteristics
+- S3 is object based, allows uploads of files
+- files can be 0 bytes to 5 TB
+- there is unlimited storage
+- files are stored in buckets (folders/directory)
+- S3 has universal namespace, they must be globally unique
+   ex: https://S3-ue-west-1.amazonaws.com/acloudguru
+- uploads HTTP 200 response on code, if API or command land
+
+Data Consistency Model for S3
+- R/W consistency for PUTS (first uploaqd), read after right for consistency
+- Eventual Consistency for overwrite of PUTS and DELETES can take time to propagate
+- S3 is a simple key-value store
+    - Key - name of object
+    - Value - data/file
+    - Version ID (supports version control)
+    - MetaData : as expected, can be determined
+    - Subrescoures - bucket-specific configuration
+        - Bucket Policies
+        - ACL's - access control lists
+        - CORS - Cross Origin Resource Sharing (CORS)
+        - Transfer Acceleration
+
+S3 Basics
+- Built for 99.99% availability for the S3 platform
+    - Amazon only gaurentees for 99.9% availability
+    - Amazon gaurantees 99.999999% for data durability  *** remember 11 x 9's
+- Tiered Storage Available
+- Lifecycle Management
+- Versioning
+- Encyption
+- Secure your data - Access Control Lists and bucket policies
+
+
+S3 Charge
+- Storage per GB
+- Requests (Get,Put,Copy)
+- Storage Managment Policies
+  - Inventory, analytics, and object tags
+- Data Management Pricing
+   - Data Transferred out of S3
+    - NOTE: Data transferred in  NOT charged
+- Transfer Acceleration
+
+***************************************************** End Overview *************************************************
+
+S3 Security
+- Access Control Mechanisms
+- By default all buckets are created to buckets and set policies
+    - Bucket Policies applied at bucket level
+    - Access Control Lists for ACL applied at the object level
+- S3 buckets can be configured to create access logs, which log all requests, can be written in another bucket
+
+
+Setting Policies - Console
+- S3 admins - note deleting a bucket can be eventual access delete
+- Only create user allowed for create/deelete
+- can add files and fill out meta ect..
+- bucket polices can be created via policy generator - S3 -> bucket(name) -> permission -> bucket policy
+                                                          -> Policy Generator
+
+    - Select (ex) S3 Bucket Policy) - generates for mult services
+    - Select actions
+    - URN available from S3 Bucket Policy page, one launched from
+    - Copy paste back to bucket policy page
+
+S3 Encyrption
+- in transit (SSl/TLS)
+- At Rest
+    - Server Side
+        - S3 Managed Keys - SSE-ES  (managed by Amazon)
+        - AWS Key Management Service, Managed KEys, S3-KMS
+           -  managed by Amazon
+           -  folder managed key (key is encrypted
+           -  Audit log for bucket
+           -  can have customer provided keys
+        - Server-side encryptions with customer proviced keys - SSE-C
+
+    - Client Side Encyption
+
+- For evey file uploaded there is a PUT request... usual info
+    - normal HTTP header, if EXPECTED : 100-continue
+        - means to reject if header error
+
+- Enforcing Encryption on S3 Buckets
+- Upload Header (x-amz-server-side-encryption - String)
+    - if the file is to be encrypted at upload time, the x-amz-server-side-encryption parameter will be in header
+        - Two options for this are
+            1. x-amz-server-side-encryption:AES256 (SSE-S3 - S3 managed Keys)
+            2. x-amz-server-side-encryption:SSE-KIMS - KMS managed Keys)
+    - when this parameter is included int the header of the PUT request, it tells S3 to
+      encypt the object at the time of the upload, using the specified encryption method
+    - You can enforce the use of Server Side Encryption by using a Bucket Policy which
+      denies any S3 UT request which doesn't includ the x-amz-server-side-encryption parameter in the request header
+
+
+
+
+
+
+**************************************************** End S3 Security *************************************************
+
+
+*********************************************************************************************************************
+****************************************************  EXAM Tips *****************************************************
+- Remember that S3 is object-based, allows upload of files,
+- Not suitable to install operating system or running a database on
+- Files can be 0 byte to 5 TB
+- There's unlimited storage
+- Files are stored in buckets (ie folders)
+- S3 is a Universal Namespace, names must be globally unique globally
+- Read after Write consistency for PUTS of new Objects
+- Eventual Consistency for overwrites PUTS and DELETES
+
+S3 - Storage Tiers
+- Standard:  99.9 and 11 x 9, can sustain loss accross 2 facilities concurrently
+- Standard_IA: (Infrequently Accessed): infrequently accessed, charged more when access, fee for retrieval of all obj
+- OneZone_1A: same as IA, but stored in 1 availability zone and 99.5% availability, cost 20% less
+- RRS: Reduced Redundancy Storage: Designed for 99.9% durablility/availability, used data can be recreated if lost
+    - not in all regions, not recommended by amazon
+    - disappearing  as offering, may still come up in the exam
+- Glacier: Very Cheap, but used for archiving, can take BTW 3 -5 hrs to store
+
+- S3 is a simple key-value store
+    - Key - name of object
+    - Value - data/file
+    - Version ID (supports version control)
+    - MetaData : as expected, can be determined
+    - Subrescoures - bucket-specific configuration
+        - Bucket Policies
+        - ACL's - access control lists
+        - CORS - Cross Origin Resource Sharing (CORS)
+        - Transfer Acceleration
+
+- Successful uploads HTTP 200 response on code, only if API or CLI
+
+NOTE: Be Sure to Read S3 FAQ: https://aws.amazon.com/s3/faqs/
+
+
+S3 Encyrption
+- in transit (SSl/TLS)
+- At Rest
+    - Server Side
+        - S3 Managed Keys - SSE-ES  (managed by Amazon)
+        - AWS Key Management Service, Managed KEys, S3-KMS
+           -  managed by Amazon
+           -  folder managed key (key is encrypted
+           -  Audit log for bucket
+           -  can have customer provided keys
+        - Server-side encryptions with customer proviced keys - SSE-C
+
+    - Client Side Encyption
+
+
+- To enforce the use of encryption for the files use tan S3 Bucket Policy to reject all requests
+   that don't contain the x-amz-server-side encryption parameter in the request header
+
+-  when bucket policy and get an error may need to add * to "Resource": "arn:aws:s3:::s3-test-bucket-taj/*",
+
+
+
+
+
+
+
+
+
+
