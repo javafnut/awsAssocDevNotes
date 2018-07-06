@@ -102,11 +102,97 @@ S3 Encyrption
       denies any S3 UT request which doesn't includ the x-amz-server-side-encryption parameter in the request header
 
 
-
-
-
-
 **************************************************** End S3 Security *************************************************
+
+
+CORS Configuration Lab
+ - Cross Origin Resource Sharing
+    - Reference between S3 Buckets
+- To test use files from my github
+- load index and error in one s3, create another for loadpage
+- add loadpage url to index.html jquery load(xxx)
+- check properties on index.html, get it's url
+- open dest bucket permissions and edit CORS Configuration
+ex:
+Original
+<!-- Sample policy -->
+<CORSConfiguration>
+	<CORSRule>
+		<AllowedOrigin>*</AllowedOrigin>
+		<AllowedMethod>GET</AllowedMethod>
+		<MaxAgeSeconds>3000</MaxAgeSeconds>
+		<AllowedHeader>Authorization</AllowedHeader>
+	</CORSRule>
+</CORSConfiguration>
+
+
+<!-- Sample policy -->
+<CORSConfiguration>
+	<CORSRule>
+		<AllowedOrigin>http://myindexwebsite-tj.s3-website-us-west-1.amazonaws.com</AllowedOrigin>
+		<AllowedMethod>GET</AllowedMethod>
+		<MaxAgeSeconds>3000</MaxAgeSeconds>
+		<AllowedHeader>Authorization</AllowedHeader>
+	</CORSRule>
+</CORSConfiguration>
+
+**************************************************** End CORS Configuration *************************************************
+
+CloudFront
+- CDN - Content Delivery Network
+- based on geographical location
+- cloudfron is more focused on content deliver
+- accelerated delivery concerns more with uploads
+
+Key CloudFront Terminalogy:
+- Edge Location: This is the location where content is cached and can also be written. Separate from AWS Region/AZ
+- Origin:  Origin of all the files that the CDN will distribute.
+    - Origins can be:
+        - an S3 Bucket and EC2 Instance
+        - an EC2 Instance
+        - an Elastic Loadbalancer
+        - or Route53
+- Distribution - This is the name given the CDN, which consists of a collection of Edge Locations
+    - Web Distribution - Typically used for websites
+    - RTMP ("Adobe" Real Time Messaging Protocal)  used for media Streaming
+
+
+CloudFront Lab
+- load image... up to somewhere far away
+- open cloudfront
+    - create distrubution
+    - select origin path (/images ...)
+    - id - use default
+    - restrict bucket access (req all access to buckets through cloud front)
+        - need  to setup access ID
+        - *** need to grant read permissions (yes, update bucket polsicy
+    - setupl default cache behaviour
+        - set http protocals and allowed methods
+      - best to use origin cache headers defaults
+        - reduce TTL to improve update times
+      -
+    - Distribution firewall, prevents common server side attack
+
+
+
+**************************************************** End CloudFront *************************************************
+S3 Performance Optimization
+- recommeded to use CND from Cloudfront edge locations
+- Mixed Type Workloads (mix of GET,PUT,DELETE, GET Bucket
+    - S3 uses the key name to determine which partition an object will be stored
+    - The use of sequential key names (ie names prefixed with timestamp/alphabetical increases the likelyhood of
+      having multiple objects stored on the same partition
+- For heavy workloads this can cause I/O issues and contention
+- By using a random prefix to key names, you can force S3 to distribute your keys across multiple partitions,
+  distributing the I/O workload
+    - ID use some prefix of hexadecimal hash
+-
+
+
+**************************************************** S3 Summary *************************************************
+
+
+
 
 
 *********************************************************************************************************************
@@ -159,11 +245,40 @@ S3 Encyrption
 
     - Client Side Encyption
 
-
 - To enforce the use of encryption for the files use tan S3 Bucket Policy to reject all requests
    that don't contain the x-amz-server-side encryption parameter in the request header
 
 -  when bucket policy and get an error may need to add * to "Resource": "arn:aws:s3:::s3-test-bucket-taj/*",
+
+
+CloudFront:
+
+Key CloudFront Terminology:
+- Edge Location: This is the location where content is cached and can also be written. Separate from AWS Region/AZ
+- Origin:  Origin of all the files that the CDN will distribute.
+    - Origins can be:
+        - an S3 Bucket and EC2 Instance
+        - an EC2 Instance
+        - an Elastic Loadbalancer
+        - or Route53
+- Distribution - This is the name given the CDN, which consists of a collection of Edge Locations
+    - Web Distribution - Typically used for websites
+    - RTMP ("Adobe" Real Time Messaging Protocal)  used for media Streaming
+
+- Edge Locations - are not just read-only, you can WRITE to them
+- CloudFront Edge Locations are utilized by S3 Transfer Acceleration to reduce upload latency
+- Objects are cached for the life (TTL0
+- You can clear cached objects for a service fee
+
+S3 Performance Optimization
+
+- GET intensive workload use CloudFront
+- Mixed-Workloads avoid sequential keynames and use something like a random hash prefix to force S3 not keep multiple
+  objects from being stored on the same partition
+-
+
+
+
 
 
 

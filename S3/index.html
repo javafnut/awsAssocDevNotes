@@ -1,0 +1,17 @@
+<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CORS Bucket index website</title>
+</head>
+<body>
+  <h1> Welecome to the index page FOO BAR</h1>
+
+<div id="get-html-from-other-s3"></div>
+<script>
+    $("#get-html-from-other-s3").load("http://mycorstestbucket-taj.s3-website-us-west-1.amazonaws.com/loadpage.html")
+</script>
+</body>
+</html>
