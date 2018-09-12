@@ -1,13 +1,13 @@
+S3 - Simple Storage Service
 
 Simple Def:  S3 provides developers and IT teams wiht secure, durable, highly-scalable object storage.
-Amazon S3 is easty to use, with a simple web services interface to store and retrieve any amount of data from anywhere
-on the web.
-
+Amazon S3 is easy to use, with a simple web services interface to store and retrieve any amount of data from anywhere
+on the web
 ** Web Services Interface
 ** Object Based Store
 
 Characteristics
-- S3 is object based, allows uploads of files
+- S3 is object based, allows uploads of files and other normal file ops
 - files can be 0 bytes to 5 TB
 - there is unlimited storage
 - files are stored in buckets (folders/directory)
@@ -16,7 +16,7 @@ Characteristics
 - uploads HTTP 200 response on code, if API or command land
 
 Data Consistency Model for S3
-- R/W consistency for PUTS (first uploaqd), read after right for consistency
+- R/W consistency for PUTS (first upload), read after right for consistency
 - Eventual Consistency for overwrite of PUTS and DELETES can take time to propagate
 - S3 is a simple key-value store
     - Key - name of object
@@ -40,14 +40,14 @@ S3 Basics
 - Secure your data - Access Control Lists and bucket policies
 
 
-S3 Charge
+S3 pricing models
 - Storage per GB
 - Requests (Get,Put,Copy)
-- Storage Managment Policies
+- Storage Management Policies
   - Inventory, analytics, and object tags
 - Data Management Pricing
    - Data Transferred out of S3
-    - NOTE: Data transferred in  NOT charged
+   - NOTE: Data transferred in  NOT charged
 - Transfer Acceleration
 
 ***************************************************** End Overview *************************************************
@@ -62,29 +62,29 @@ S3 Security
 
 Setting Policies - Console
 - S3 admins - note deleting a bucket can be eventual access delete
-- Only create user allowed for create/deelete
+- Only create user allowed for create/delete
 - can add files and fill out meta ect..
 - bucket polices can be created via policy generator - S3 -> bucket(name) -> permission -> bucket policy
                                                           -> Policy Generator
 
-    - Select (ex) S3 Bucket Policy) - generates for mult services
+    - Select (ex) S3 Bucket Policy) - generates for multiple services
     - Select actions
     - URN available from S3 Bucket Policy page, one launched from
     - Copy paste back to bucket policy page
 
-S3 Encyrption
-- in transit (SSl/TLS)
+S3 Encryption Types
+- In transit (SSl/TLS)
 - At Rest
     - Server Side
         - S3 Managed Keys - SSE-ES  (managed by Amazon)
-        - AWS Key Management Service, Managed KEys, S3-KMS
+        - AWS Key Management Service, Managed eEys, S3-KMS
            -  managed by Amazon
-           -  folder managed key (key is encrypted
+           -  folder managed key (key is encrypted by user)
            -  Audit log for bucket
            -  can have customer provided keys
-        - Server-side encryptions with customer proviced keys - SSE-C
+        - Server-side Encryption with customer provided keys - SSE-C
 
-    - Client Side Encyption
+    - Client Side Encryption
 
 - For evey file uploaded there is a PUT request... usual info
     - normal HTTP header, if EXPECTED : 100-continue
@@ -97,9 +97,9 @@ S3 Encyrption
             1. x-amz-server-side-encryption:AES256 (SSE-S3 - S3 managed Keys)
             2. x-amz-server-side-encryption:SSE-KIMS - KMS managed Keys)
     - when this parameter is included int the header of the PUT request, it tells S3 to
-      encypt the object at the time of the upload, using the specified encryption method
+      encrypt the object at the time of the upload, using the specified encryption method
     - You can enforce the use of Server Side Encryption by using a Bucket Policy which
-      denies any S3 UT request which doesn't includ the x-amz-server-side-encryption parameter in the request header
+      denies any S3 UT request which doesn't include the x-amz-server-side-encryption parameter in the request header
 
 
 **************************************************** End S3 Security *************************************************
@@ -109,10 +109,10 @@ CORS Configuration Lab
  - Cross Origin Resource Sharing
     - Reference between S3 Buckets
 - To test use files from my github
-- load index and error in one s3, create another for loadpage
-- add loadpage url to index.html jquery load(xxx)
+- load index.html and error.html in one s3, create another for loadpage.html
+- add loadpage.html url to index.html jquery load(xxx)
 - check properties on index.html, get it's url
-- open dest bucket permissions and edit CORS Configuration
+- open destination bucket permissions and edit CORS Configuration
 ex:
 Original
 <!-- Sample policy -->
@@ -141,16 +141,16 @@ Original
 CloudFront
 - CDN - Content Delivery Network
 - based on geographical location
-- cloudfron is more focused on content deliver
+- CloudFront is more focused on content delivery
 - accelerated delivery concerns more with uploads
 
-Key CloudFront Terminalogy:
+Key CloudFront Terminology:
 - Edge Location: This is the location where content is cached and can also be written. Separate from AWS Region/AZ
 - Origin:  Origin of all the files that the CDN will distribute.
     - Origins can be:
         - an S3 Bucket and EC2 Instance
         - an EC2 Instance
-        - an Elastic Loadbalancer
+        - an Elastic Load Balancer
         - or Route53
 - Distribution - This is the name given the CDN, which consists of a collection of Edge Locations
     - Web Distribution - Typically used for websites
@@ -159,7 +159,7 @@ Key CloudFront Terminalogy:
 
 CloudFront Lab
 - load image... up to somewhere far away
-- open cloudfront
+- open CloudFront
     - create distrubution
     - select origin path (/images ...)
     - id - use default
@@ -177,7 +177,7 @@ CloudFront Lab
 
 **************************************************** End CloudFront *************************************************
 S3 Performance Optimization
-- recommeded to use CND from Cloudfront edge locations
+- recommended to use CND from CloudFront edge locations
 - Mixed Type Workloads (mix of GET,PUT,DELETE, GET Bucket
     - S3 uses the key name to determine which partition an object will be stored
     - The use of sequential key names (ie names prefixed with timestamp/alphabetical increases the likelyhood of
