@@ -116,10 +116,34 @@ Pricing models
 		T - Cheap general purpose
 		P - Grapics (Pix)
 		X - Exteme memorey
-		
-		
-=======================================================================================================
+==============================================================================================
 
+Eclastic Load Balancers Exam Tips
+
+	- 3 Types
+		- Application Load Balancers
+		- Network Load Balancers
+		- Classic Load Balancers
+
+	- 504 Error means the gateway has timed out. 
+		- Check Web Server or Database Server
+
+	- If you need the IPv4 address of your end user, look for the X-Forwared-For header
+			
+=======================================================================================================
+Load Balancers Lab - Route53 Exam Tips
+	- Route53 is Amazon's DNS service
+	- Allows you to map your domain names to:
+		- EC2 Instances
+		- Load Balancers
+		- S3 buckets
+	
+	
+
+
+
+
+==============================================================================================
 Security Groups Lab:
 	Security Group is a Virtual Firewall
 	- All inbound traffic is block by default
